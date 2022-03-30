@@ -13,15 +13,15 @@ find_library(log-lib log)
 
 add_library(spdlog STATIC IMPORTED)
 set_target_properties(spdlog PROPERTIES IMPORTED_LOCATION
-        /home/konstantin/AndroidStudioProjects/libs/spdlog/build/${ANDROID_ABI}/libspdlog.a)
+        /home/konstantin/AndroidStudioProjects/RPO_BMSU/libs/spdlog/build/arm64-v8a/libspdlog.a)
 
-add_library(mbedcrypto SHARED IMPORTED)
+add_library(mbedcrypto STATIC IMPORTED)
 set_target_properties(mbedcrypto PROPERTIES IMPORTED_LOCATION
-        /home/konstantin/AndroidStudioProjects/libs/mbedtls/build/${ANDROID_ABI}/library/libmbedcrypto.so)
+        /home/konstantin/AndroidStudioProjects/RPO_BMSU/libs/mbedtls/build/arm64-v8a/library/libmbedcrypto.so)
 
 target_include_directories(native-lib PUBLIC
-        /home/konstantin/AndroidStudioProjects/libs/spdlog/spdlog/include
-        /home/konstantin/AndroidStudioProjects/libs/mbedtls/mbedtls/include
+        /home/konstantin/AndroidStudioProjects/RPO_BMSU/libs/spdlog/spdlog/include
+        /home/konstantin/AndroidStudioProjects/RPO_BMSU/libs/mbedtls/mbedtls/include
         )
 target_link_libraries( # Specifies the target library.
         native-lib

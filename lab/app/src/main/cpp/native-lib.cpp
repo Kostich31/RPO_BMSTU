@@ -4,12 +4,6 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/android_sink.h>
 
-#include <android/log.h>
-#define LOG_INFO(...) __android_log_print(ANDROID_LOG_INFO, "lab_ndk", __VA_ARGS__)
-
-#include "spdlog/spdlog.h"
-#include "spdlog/sinks/android_sink.h"
-
 #include "mbedtls/entropy.h"
 #include "mbedtls/ctr_drbg.h"
 #include <mbedtls/des.h>
@@ -17,6 +11,8 @@
 mbedtls_entropy_context entropy;
 mbedtls_ctr_drbg_context ctr_drbg;
 char *personalization = "lab-sample-app";
+
+#define LOG_INFO(...) __android_log_print(ANDROID_LOG_INFO, "lab_ndk", __VA_ARGS__)
 
 auto logger = spdlog::android_logger_mt("android", "lab_ndk");
 
@@ -27,7 +23,7 @@ Java_com_example_lab_MainActivity_stringFromJNI(
         jobject /* this */) {
     std::string hello = "Hello from C++";
     LOG_INFO("Hello from c++ %d", 2022);
-    //logger->info("Hello from spdlog {0}", 2022);
+    logger->info("Hello from spdlog {0}", 2022);
     return env->NewStringUTF(hello.c_str());
 }
 
@@ -51,7 +47,6 @@ Java_com_example_lab_MainActivity_randomBytes(JNIEnv *env, jclass, jint no) {
     return rnd;
 }
 
-// https://tls.mbed.org/api/des_8h.html
 extern "C" JNIEXPORT jbyteArray JNICALL
 Java_com_example_lab_MainActivity_encrypt(JNIEnv *env, jclass, jbyteArray key, jbyteArray data)
 {
