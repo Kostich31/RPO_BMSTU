@@ -14,7 +14,7 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityResultLauncher activityResultLauncher;
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     static {
         System.loadLibrary("native-lib");
@@ -30,9 +30,8 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
                         // обработка результата
-                        String pin = data.getStringExtra("pin");
+                        String pin = result.getData().getStringExtra("pin");
                         Toast.makeText(MainActivity.this, pin,
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButtonClick(View v)
     {
-
         Intent it = new Intent(this, PinpadActivity.class);
         activityResultLauncher.launch(it);
 
