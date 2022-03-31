@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.example.lab.databinding.ActivityMainBinding;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     static {
@@ -23,7 +26,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         int res = initRng();
-        byte[] rnd = randomBytes(10);
+        byte[] rnd = randomBytes(16);
+
+        Random random = new Random();
+
+        byte[] data = new byte[16];
+        for (int i = 0; i < data.length; ++i) {
+            data[i] = (byte) ((byte) random.nextInt() % 255);
+        }
+        Log.i("data", Arrays.toString(data));
+        byte[] encrypt_data = encrypt(rnd, data);
+
+        byte[] decrypt_data = decrypt(rnd, encrypt_data);
+
+        Log.i("enc_data", Arrays.toString(encrypt_data));
+        Log.i("dec_data", Arrays.toString(decrypt_data));
 
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
