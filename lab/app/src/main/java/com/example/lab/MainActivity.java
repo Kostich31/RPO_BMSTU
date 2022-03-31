@@ -15,12 +15,9 @@ import android.content.Intent;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
-import java.util.Arrays;
-
-
 public class MainActivity extends AppCompatActivity implements TransactionEvents {
 
-    ActivityResultLauncher activityResultLauncher;
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     static {
         System.loadLibrary("native-lib");
@@ -49,36 +46,17 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
     }
 
     public void onButtonClick(View view) {
-        new Thread(() -> {
-            try {
-                byte[] trd = stringToHex("9F0206000000000100");
-                transaction(trd);
-            } catch (Exception exception) {
-                Log.println(Log.ERROR, "MtLog", Arrays.toString(exception.getStackTrace()));
-            }
-        }).start();
+//        new Thread(() -> {
+//            try {
+//                byte[] trd = stringToHex("9F0206000000000100");
+//                transaction(trd);
+//            } catch (Exception exception) {
+//                Log.println(Log.ERROR, "MtLog", Arrays.toString(exception.getStackTrace()));
+//            }
+//        }).start();
+        byte[] trd = stringToHex("9F0206000000000100");
+        transaction(trd);
     }
-
-    public static byte[] stringToHex(String s) {
-        byte[] hex;
-        try {
-            hex = Hex.decodeHex(s.toCharArray());
-        } catch (DecoderException ex) {
-            hex = null;
-        }
-        return hex;
-    }
-
-    public static native int initRng();
-
-    public static native byte[] randomBytes(int no);
-
-    public static native byte[] encrypt(byte[] key, byte[] data);
-
-    public static native byte[] decrypt(byte[] key, byte[] data);
-
-    public native boolean transaction(byte[] trd);
-
 
     private String pin;
 
@@ -107,4 +85,26 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
             Toast.makeText(MainActivity.this, result ? "ok" : "failed", Toast.LENGTH_SHORT).show();
         });
     }
+
+
+    public static byte[] stringToHex(String s) {
+        byte[] hex;
+        try {
+            hex = Hex.decodeHex(s.toCharArray());
+        } catch (DecoderException ex) {
+            hex = null;
+        }
+        return hex;
+    }
+
+    public static native int initRng();
+
+    public static native byte[] randomBytes(int no);
+
+    public static native byte[] encrypt(byte[] key, byte[] data);
+
+    public static native byte[] decrypt(byte[] key, byte[] data);
+
+    public native boolean transaction(byte[] trd);
+
 }

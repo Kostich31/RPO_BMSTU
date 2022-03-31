@@ -91,7 +91,6 @@ Java_com_example_lab_MainActivity_transaction(JNIEnv *xenv, jobject xthiz, jbyte
         id = env->GetMethodID(cls, "transactionResult", "(Z)V");
         env->CallVoidMethod(thiz, id, ptc > 0);
 
-        // Вот эта строчка являлась причиной всех бед
         env->ReleaseByteArrayElements(trd, (jbyte *)p, 0);
 
         env->DeleteGlobalRef(thiz);
