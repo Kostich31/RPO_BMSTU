@@ -1,12 +1,16 @@
 package ru.iu3.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "paintings")
 @Access(AccessType.FIELD)
-
 public class Painting {
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +19,13 @@ public class Painting {
     @Column(name = "name")
     public String name;
 
-    @Column(name = "artistid")
-    public Long artistid;
+    @ManyToOne
+    @JoinColumn(name = "artistid")
+    public Artist artistid;
 
-    @Column(name = "museumid")
-    public Long museumid;
+    @ManyToOne
+    @JoinColumn(name = "museumid")
+    public Museum museumid;
 
     @Column(name = "year")
     public Long year;
