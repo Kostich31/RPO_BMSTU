@@ -18,6 +18,10 @@ import java.util.Enumeration;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+/**
+ * Класс, который осуществляет аутентификацию
+ * @author kostya
+ */
 public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     // Конструктор
     AuthenticationFilter(final RequestMatcher requiresAuth) {
@@ -40,7 +44,6 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
         // Извлекаем токены из заголовка
         String token = request.getHeader(AUTHORIZATION);
         if (token != null) {
-            // Если токен не пуст, то фильтруем всякий мусор и убираем пробел после слова
             token = StringUtils.removeStart(token,"Bearer").trim();
         }
 

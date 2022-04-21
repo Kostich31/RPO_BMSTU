@@ -76,6 +76,7 @@ public class LoginController {
      */
     @GetMapping("/logout")
     public ResponseEntity logout(@RequestHeader(value = "Authorization", required = false) String token) {
+        // Вот здесь была ошибка в методичке. Она исправлена
         if (token != null && !token.isEmpty()) {
             // Очищаем токен от всякого мусора
             token = StringUtils.removeStart(token, "Bearer").trim();

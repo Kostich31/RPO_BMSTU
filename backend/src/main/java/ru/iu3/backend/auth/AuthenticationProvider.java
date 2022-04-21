@@ -16,6 +16,10 @@ import ru.iu3.backend.repositories.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * Класс - провайдер авторизации. По сути, это контроллер, который отвечает за авторизацию пользователей в БД
+ * @author kostya
+ */
 @Component
 public class AuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
     // Поле, взятое из конфига - тайм-аут пользователя
@@ -59,14 +63,10 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
 
         // Дополнительная вставка: проверяем тайм-аут пользователя
         boolean timeout = true;
-        // Извлекаем системное время, привязанное к часовому поясу. С этим были проблемы:
-        // В базе писалось одно время, а в реальности - было смещённое на час
-        // Приходилось двигать именно часовой пояс, а не системное время в зависимости от расхождения между БД и жизнью
         LocalDateTime dt = LocalDateTime.now();
 
         // Если пользователь активен
         if (u.activity != null) {
-            // В методичке написано 10 минут. Для теста поставил 20 секунд
             LocalDateTime nt = u.activity.plusSeconds(sessionTimeOut);
 
             // Принцип таков: если dt меньше nt, то есть текущее время меньше чем из БД, то хорошо

@@ -13,6 +13,10 @@ import ru.iu3.backend.repositories.UserRepository;
 
 import java.util.*;
 
+/**
+ * Класс - контроллер пользователя
+ * @author kostya
+ */
 @RestController
 @RequestMapping("api/v1")
 public class UsersController {
