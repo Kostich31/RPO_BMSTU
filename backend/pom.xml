@@ -40,7 +40,19 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
-		
+		<!-- Добавляем дополнительную зависимость к библиотекам (для авторизации). Если прога ругается,
+		просто синхронизируй-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Дополнительная зависимость для StringUtils -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
+		</dependency>
 	</dependencies>
 
 	<build>
