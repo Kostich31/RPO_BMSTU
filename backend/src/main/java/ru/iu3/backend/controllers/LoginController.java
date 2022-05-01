@@ -19,6 +19,7 @@ import java.util.UUID;
  * Класс - контроллер авторизации. Он не привязан к какой-либо модели, поэтому пишем его отдельно
  * @author kostya
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/auth")
 public class LoginController {
