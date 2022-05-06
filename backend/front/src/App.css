@@ -28,6 +28,24 @@
   color: #61dafb;
 }
 
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+.my-sidebar {
+  min-height: 100vh;
+  background: #ecf0f1;
+  color: #ecf0f1;
+}
+.my-sidebar-expanded {
+  min-width: 200px;
+  max-width: 200px;
+}
+.my-sidebar-collapsed {
+  min-width: 62px;
+  max-width: 62px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
