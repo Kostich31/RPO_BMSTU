@@ -15,6 +15,7 @@ import java.util.*;
  * Класс - контроллер музея
  * @author kostya
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/v1")
 public class MuseumController {

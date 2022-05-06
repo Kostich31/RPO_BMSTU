@@ -14,6 +14,7 @@ import java.util.*;
  * Класс - контроллер картин
  * @author kostya
  */
+
 @RestController
 @RequestMapping("api/v1")
 public class PaintingController {
