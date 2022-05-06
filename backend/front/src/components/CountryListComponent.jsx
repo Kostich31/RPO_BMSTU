@@ -4,6 +4,7 @@ import { faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons'
 import Alert from './Alert'
 import BackendService from "../services/BackendService";
 import { useNavigate } from 'react-router-dom';
+import PaginationComponent from "./PaginationComponent";
 
 const CountryListComponent = props => {
     const [message, setMessage] = useState();
@@ -12,7 +13,13 @@ const CountryListComponent = props => {
     const [show_alert, setShowAlert] = useState(false);
     const [checkedItems, setCheckedItems] = useState([]);
     const [hidden, setHidden] = useState(false);
+    const [page, setPage] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
+    const limit = 2;
     const navigate = useNavigate();
+    const onPageChanged = cp => {
+        refreshCountries(cp - 1)
+    }
 
     const setChecked = v => {
         setCheckedItems(Array(countries.length).fill(v));
@@ -51,14 +58,19 @@ const CountryListComponent = props => {
         }
     }
 
-    const refreshCountries = () => {
-        BackendService.retrieveAllCountries()
+    const refreshCountries = cp => {
+        BackendService.retrieveAllCountries(cp, limit)
             .then(
                 resp => {
-                    setCountries(resp.data);
+                    setCountries(resp.data.content);
                     setHidden(false);
+                    setTotalCount(resp.data.totalElements);
+                    setPage(cp);
                 })
-            .catch(() => { setHidden(true) })
+            .catch(() => {
+                setHidden(true);
+                setTotalCount(0);
+            })
             .finally(() => setChecked(false))
     }
 
@@ -91,6 +103,11 @@ const CountryListComponent = props => {
         <div className="m-4">
             <div className="row my-2">
                 <h3>Страны</h3>
+                <PaginationComponent
+                    totalRecords={totalCount}
+                    pageLimit={limit}
+                    pageNeighbours={1}
+                    onPageChanged={onPageChanged} />
                 <div className="btn-toolbar">
                     <div className="btn-group ms-auto">
                         <button className="btn btn-outline-secondary"

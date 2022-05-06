@@ -46,6 +46,21 @@
   max-width: 62px;
 }
 
+.page-item.active .page-link {
+  background-color: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+.page-link {
+  background-color: white;
+  color: #6c757d;
+  border-color: #6c757d;
+}
+.page-link:hover {
+  color: black;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
