@@ -8,10 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Класс - модель музея
- * @author kostya
- */
+
 @Entity
 @Table(name = "museums")
 @Access(AccessType.FIELD)
@@ -39,16 +36,12 @@ public class Museum {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "usersmuseums", joinColumns = @JoinColumn(name = "museumid"), inverseJoinColumns = @JoinColumn(name = "userid"))
-    public Set<Users> users = new HashSet<>();
+    public Set<User> users = new HashSet<>();
 
     // Создаём конструктор
     public Museum() {
     }
 
-    /**
-     * Конструктор, который принмиает в себя ID
-     * @param id - ID музея
-     */
     public Museum(Long id) {
         this.id = id;
     }

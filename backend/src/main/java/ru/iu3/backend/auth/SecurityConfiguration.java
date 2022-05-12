@@ -3,6 +3,7 @@ package ru.iu3.backend.auth;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,15 +14,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.server.authentication.AnonymousAuthenticationWebFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import javax.servlet.Filter;
 
-/**
- * Класс, в котором указываются настройки spring boot security
- * @author kostya
- */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -33,10 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Провайдер для аутентификации
     AuthenticationProvider provider;
 
-    /**
-     * Конструктор
-     * @param authenticationProvider - провайдер аутентификации - поиск в БД
-     */
+
     public SecurityConfiguration(final AuthenticationProvider authenticationProvider) {
         super();
         this.provider = authenticationProvider;
@@ -47,11 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(this.provider);
     }
 
-    /**
-     * Ещё одна дополнительная конфигурация. Указываем адресный путь, откуда будет вызываться авторизация
-     * @param web - параметр web
-     * @throws Exception - ошибка, требуется обязательно
-     */
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/auth/login");
@@ -66,11 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().disable().httpBasic().disable().logout().disable().cors();
     }
 
-    /**
-     * Метод - дополнительная фильтрация. Извлекать можно только из определённого диапазона адресов
-     * @return - фильтр
-     * @throws Exception - ошибка, которая извлекается
-     */
+
     @Bean
     AuthenticationFilter authenticationFilter() throws Exception {
         final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
@@ -79,10 +67,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    /**
-     * Метод, возвращающий статус ошибки - 403
-     * @return - HttpStatus
-     */
     @Bean
     AuthenticationEntryPoint forbiddenEntryPoint() {
         return new HttpStatusEntryPoint(HttpStatus.FORBIDDEN);
